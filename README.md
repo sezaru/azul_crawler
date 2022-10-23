@@ -44,3 +44,9 @@ Creating xlsx files         [≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
 ```
 
 When the script is done, you will have some `.xsls` files in the same directory with the flight data.
+
+## Errors
+
+If you see some error logs, don't worry, it just means that the website is not loading correctly.
+
+The script will retry it automatically, it will only crash if the website fails for more than 10 times.
