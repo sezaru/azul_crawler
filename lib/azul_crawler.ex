@@ -4,7 +4,6 @@ defmodule AzulCrawler do
   alias AzulCrawler.{Crawler, XLSX}
 
   @processes 2
-  @sleep_for :timer.seconds(10)
 
   def run(from, to, start_date, end_date, round_trip?) do
     Logger.configure_backend(:console, device: Owl.LiveScreen)
@@ -31,14 +30,9 @@ defmodule AzulCrawler do
       date_range
       |> Enum.chunk_every(@processes)
       |> Enum.flat_map(fn chunk ->
-        reply =
-          chunk
-          |> Enum.map(fn date -> Task.async(fn -> get_flight(from, to, date) end) end)
-          |> Task.await_many(:infinity)
-
-      # Process.sleep(@sleep_for)
-
-        reply
+        chunk
+        |> Enum.map(fn date -> Task.async(fn -> get_flight(from, to, date) end) end)
+        |> Task.await_many(:infinity)
       end)
 
     Owl.ProgressBar.start(
