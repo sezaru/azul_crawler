@@ -46,7 +46,10 @@ defmodule AzulCrawler do
 
   defp get_flight(from, to, date) do
     flights =
-      GenRetry.Task.async(fn -> Crawler.get_flights(from, to, date) end, retries: 5)
+      GenRetry.Task.async(fn -> Crawler.get_flights(from, to, date) end,
+        retries: 10,
+        delay: :timer.seconds(20)
+      )
       |> Task.await(:infinity)
 
     Owl.ProgressBar.inc(id: :fetching_flights)
