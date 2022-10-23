@@ -4,12 +4,13 @@ defmodule AzulCrawler.Crawler.Parser do
   def price(string), do: Money.parse!(string, :BRL, separator: ".", delimiter: ",")
 
   def flight_connections(string) do
-    string
-    |> String.split(" • ")
-    |> List.first()
-    |> String.split(" ")
-    |> List.first()
-    |> String.to_integer()
+    case String.split(string, " • ") do
+      [string, _] ->
+        string |> String.split(" ") |> List.first() |> String.to_integer()
+
+      [string] ->
+        if String.ends_with?(string, "Direto"), do: 0, else: nil
+    end
   end
 
   def date(string, date) do
