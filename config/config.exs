@@ -3,7 +3,7 @@ import Config
 config :wallaby,
   chromedriver: [
     path: "./chromedriver",
-    headless: false
+    headless: true
   ]
 
 config :wallaby,
